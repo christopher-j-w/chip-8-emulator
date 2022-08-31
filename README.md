@@ -8,14 +8,14 @@ CHIP-8 is an interpreted programming language created in the 1970's made to crea
 
 ## Components
 
-Memory - 4096 bytes (0x000 to 0xFFF)
-Registers - 16 6-bit data registers (V0 to VF)
-Stack - 12 levels
-Delay Timer - For timing events of games. Count down at 60Hz until 0
-Sound Timer - Non-zero value produces a sound. Count down at 60Hz until 0
-Input -
-Display - 64x32 resolution. 
-Opcodes - 35 opcodes, 2 bytes long, big-endian.
+- Memory - 4096 bytes (0x000 to 0xFFF)
+- Registers - 16 6-bit data registers (V0 to VF)
+- Stack - 12 levels
+- Delay Timer - For timing events of games. Count down at 60Hz until 0
+- Sound Timer - Non-zero value produces a sound. Count down at 60Hz until 0
+- Input -
+- Display - 64x32 resolution. 
+- Opcodes - 35 opcodes, 2 bytes long, big-endian.
 
 ## Useful resources
 
