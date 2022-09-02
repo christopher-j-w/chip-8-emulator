@@ -33,13 +33,9 @@ uint8_t font[FONT_SIZE] =
 		0xF0, 0x80, 0xF0, 0x80, 0x80  // F
 	};
 
-Chip8::Chip8(){
 
-		
-}
-
-// Clears memory, registers, stack, timers, display to 0.
-void Chip8::initialise()
+// Initialise memory, registers, stack, timers, display to 0.
+void Chip8::clear_all()
 {	
 	for (int i = 0; i < MEMORY_SIZE; ++i) 
 		memory[i] = 0; // clear memory
@@ -59,7 +55,6 @@ void Chip8::initialise()
 	cout << "Chip8 has been initialised.\n"; 
 
 }
-
 
 
 
@@ -92,14 +87,12 @@ void Chip8::load_file(const char * file_name)
 			}
 			cout << file_name << " has been successfully loaded.\n";
 		
-			delete[] buffer;
-		
+			delete[] buffer;		
 		}
 		else 
 			cout << "\n File is too big for CHIP-8s memory.\n";
 
 		file.close();	
-
 	}
 }
 
