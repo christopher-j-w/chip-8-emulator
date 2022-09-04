@@ -3,6 +3,7 @@
 
 class Display{
     public:
-        Display();
+        Display() = default;
         void begin_Display(int x, int y);
+        
 };

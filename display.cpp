@@ -4,11 +4,6 @@
 
 using std::cout;
 
-Display::Display()
-{
-
-}
-
 void Display::begin_Display(int x_resolution, int y_resolution)
 {
   if(SDL_Init(SDL_INIT_VIDEO) != 0)

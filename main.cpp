@@ -15,12 +15,16 @@ int main(int argc, char** argv)
     my_Chip8.load_file(file_name); 
     my_Display.begin_Display(X_RESOLUTION, Y_RESOLUTION);  
 
-    bool close_program = false;
+    bool end_program = false;
 
-    /*while (!close_program)
+    /*while (!end_program)
     {
         
 
     }*/
     return 0;
 }
+
+
+//g++ main.cpp chip8.cpp display.cpp -I SDL2/include -L SDL2/lib -lmingw32 -lSDL2main -lSDL2 -o file2.exe
+
