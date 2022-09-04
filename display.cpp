@@ -29,6 +29,6 @@ void Display::begin_Display(int x_resolution, int y_resolution)
     }
 
     SDL_UpdateWindowSurface(window);
-    SDL_Delay(1000);
+    SDL_Delay(5000);
 
 }

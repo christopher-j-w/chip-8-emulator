@@ -1,7 +1,5 @@
 #pragma once
 
-//#include <cstdint>
-
 const unsigned int MEMORY_SIZE = 4096;
 const unsigned int REGISTERS_COUNT = 16;
 const unsigned int STACK_COUNT = 16;
@@ -11,16 +9,18 @@ const unsigned int Y_RESOLUTION = 320;
 class Chip8 {
     private:           
         uint8_t memory[MEMORY_SIZE] {};
-        uint8_t registers[REGISTERS_COUNT] {};
+        uint8_t V_registers[REGISTERS_COUNT] {};
+        uint16_t I_register {};
         uint16_t stack[STACK_COUNT] {};
+        uint8_t stack_pointer {};
         uint8_t delay_timer {};
         uint8_t sound_timer {};
         uint16_t program_counter {};
         uint16_t op_code {};
         uint32_t display[64*32] {};  
-
-        void Op_Code_00E0(); //Clear the display
+        
         void Op_Code_1nnn(); //Jump to location nnn
+        void Op_Code_00E0(); //Clear the display
         void Op_Code_2nnn(); //Call subroutine at nnn
         void Op_Code_3xkk(); //Skip next instruction if Vx = kk
         void Op_Code_4xkk(); //Skip next instruction if Vx != kk
@@ -54,8 +54,11 @@ class Chip8 {
         void Op_Code_Fx65(); //Read registers V0 through Vx from memory starting at location I        
         
     public:
+        
         Chip8() = default;        
         void load_file(const char * file_name);     
-        void clear_all();       
+        void clear_all();   
+        uint16_t get_Op_Code();    
+        void interpret_Op_Code();
 
 };
