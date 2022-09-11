@@ -1,9 +1,17 @@
 #pragma once
 
+#include "chip8.hpp"
 
-class Display{
+class Display_and_input
+{
     public:
-        Display() = default;
-        void begin_Display(int x, int y);
-        
+        Display_and_input() = default;
+        void begin_display(char const* title);
+        void update_display(void const* pixels, int pitch);
+        bool get_key_press(u8* keyboard_controls);
+        bool quit = false;
+        SDL_Window* window;
+        SDL_Renderer* renderer;
+        SDL_Texture* texture;       
 };
+
