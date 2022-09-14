@@ -36,7 +36,7 @@ int main(int argc, char** argv)
     {      
         end_program = display_and_input.get_key_press(chip8.keyboard_controls); 
         count++;         
-        if (count > 2500)
+        if (count > 10000)
         {               
 		    chip8.cycle();           
             display_and_input.update_display(chip8.display_array, video_pitch); 

@@ -19,8 +19,7 @@ class Chip8 {
         u16 index_register {};
         u16 stack[STACK_COUNT] {};
         u8 stack_pointer {};        
-        u8 sound_timer {};
-       
+        u8 sound_timer {};       
         u16 program_counter {};
         u16 op_code {}; 
         

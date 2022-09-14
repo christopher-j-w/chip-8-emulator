@@ -465,23 +465,24 @@ void Chip8::Op_Code_Dxyn(u8 Vx, u8 Vy)
 	u8 sprite_height = op_code & 0x000F;
 	
 	int x_coord = V_registers[Vx] % X_RESOLUTION;
-	int y_coord = V_registers[Vy] % Y_RESOLUTION;	
+	int y_coord = V_registers[Vy] % Y_RESOLUTION;
+	V_registers[0xF] = 0;	
 
 	for (int y_row = 0; y_row < sprite_height; ++y_row)
 	{
 		int sprite_data = memory[index_register + y_row];
-
+		
 		for (int x_column = 0; x_column < 8; ++x_column)
 		{						
 			if (sprite_data & (0x80 >> x_column))
 			{				
-				if ( display_array[(y_coord + y_row) * X_RESOLUTION + (x_coord + x_column)] == 1)				
-					V_registers[0xF] = 1;
-					
-				display_array[(y_coord + y_row) * X_RESOLUTION + (x_coord + x_column)] ^= 0xFFFFFFFF;					
-			}
-			
-		}
+				if ( display_array[(y_coord + y_row) * X_RESOLUTION + (x_coord + x_column)]== 0xFFFFFFFF)		
+				{
+					V_registers[0xF] = 1;	
+				}
+				display_array[(y_coord + y_row) * X_RESOLUTION + (x_coord + x_column)] ^= 0xFFFFFFFF;
+			}				
+		}			
 	}
 }
 
