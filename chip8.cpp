@@ -50,12 +50,14 @@ void Chip8::clear_all()
 	
 	for (int i =0; i < REGISTERS_COUNT; ++i)
 		V_registers[i] = 0; //clear V registers		
+
+	std::srand( ( u8 )std::time( nullptr ) );
 		
 	cout << "Chip8 has been initialised.\n"; 
 }
 
 //Opens a .ch8 (sometimes also .c8) ("rom") file as a binary stream and loads it in to memory if it fits in to CHIP8s memory.
-void Chip8::load_file(const char * file_name)
+bool Chip8::load_file(std::string const& file_name)
 {
 	//Open file as stream of binary.
 	std::ifstream file;
@@ -85,10 +87,20 @@ void Chip8::load_file(const char * file_name)
 			delete[] buffer;		
 		}
 		else 
-			cout << "File is too big for CHIP-8s memory.\n";
+			{
+				cout << "File is too big for CHIP-8s memory.\n";
+				return false;
+			}
 
 		file.close();	
+		return true;
 	}
+	else
+	{	
+		cout << "Could not open file.\n";
+		return false;
+	}
+	
 }
 
 
@@ -96,13 +108,14 @@ void Chip8::load_file(const char * file_name)
 	interpret and execute the op code, and decrement the delay and sound timers. */
 void Chip8::cycle()
 {		
+	
 	get_Op_Code();		
 	//cout << "Current Op code to be executed is: " << op_code << '\n';
 	program_counter += 2;		
 	decode_op_code();
 
 	if (delay_timer > 0)	
-		--delay_timer;	
+		--delay_timer;		
 
 	if (sound_timer > 0)	
 		--sound_timer;	
@@ -350,7 +363,7 @@ void Chip8::Op_Code_8xy3(u8 Vx, u8 Vy)
 	V_registers[Vx] ^= V_registers[Vy];
 }
 
-/*	Set V_Registers[x] to equal  V_registers[x] + V_Reigsters[y].
+/*	Total is equal to V_registers[x] + V_Reigsters[y].
 	Set V_Registers[0xF] to carry IF total is greater than a byte.
 	Store the last 8 bits (0x00FF) in V_Registers[x]. 	*/
 void Chip8::Op_Code_8xy4(u8 Vx, u8 Vy) 
@@ -430,42 +443,44 @@ void Chip8::Op_Code_Bnnn()
 void Chip8::Op_Code_Cxkk(u8 Vx) 
 {
 	u8 low_number  = 0;
-    u8 high_number = 255;
-    std::srand( ( u8 )std::time( nullptr ) );   
-	u8 random_number = low_number + std::rand() % ( high_number - low_number );		
-
+    u8 high_number = 255;    
+	u8 random_number = low_number + std::rand() % ( high_number - low_number );			
 	V_registers[Vx] = (op_code & 0x00FF) & random_number;	
 	
 };
 
-/*	Read n bytes from memory, starting at address in index register.
+/*	Draws a sprite at coordinates from the V[Vx] and V[Vy] registers.
+	The width will always be 8, and the height is taken from the n in opcode.
 	Sprites are XORed onto the display. If this causes any pixels to be erased, VF is set to 1, otherwise it is set to 0.
-	If the sprite is goes outside the display range, it wraps around to the opposite side of the screen.	*/
+	If the sprite is goes outside the display range, it wraps around to the opposite side of the screen.
+	
+	This was the most difficult opcode to implement so high level explanation is: the sprite data begins at location of the index register. 
+	It is always 8 bits wide, and the height is gotten from the n part of the opcode. The x and y coords are checked for wrapping by the modulo.
+	(e.g if something is to be drawn at 65 on the x axis of the display it will be 65%64, so a value of 1 will flip it to the other side of the screen).
+	The y_row variable is the height of the sprite in memory. The x_column then moves along each y_line and gets the value (either on or off, 1 or 0). 
+	display_array[(y_coord + y_row) * X_RESOLUTION + (x_coord + x_column)] will get the current pixel of the display.
+								*/
 void Chip8::Op_Code_Dxyn(u8 Vx, u8 Vy) 
 {	
-	u8 n = op_code & 0x000F;
+	u8 sprite_height = op_code & 0x000F;
 	
-	u8 x_coord = V_registers[Vx] % X_RESOLUTION;
-	u8 y_coord = V_registers[Vy] % Y_RESOLUTION;
+	int x_coord = V_registers[Vx] % X_RESOLUTION;
+	int y_coord = V_registers[Vy] % Y_RESOLUTION;	
 
-	V_registers[0xF] = 0;
-
-	for (int row = 0; row < n; ++row)
+	for (int y_row = 0; y_row < sprite_height; ++y_row)
 	{
-		u8 sprite_location = memory[index_register + row];
+		int sprite_data = memory[index_register + y_row];
 
-		for (unsigned int col = 0; col < 8; ++col)
-		{
-			u8 pixel = sprite_location & (0x80 >> col);
-			u32* screenPixel = &display_array[(y_coord + row) * X_RESOLUTION + (x_coord + col)];
-			
-			if (pixel)
+		for (int x_column = 0; x_column < 8; ++x_column)
+		{						
+			if (sprite_data & (0x80 >> x_column))
 			{				
-				if (*screenPixel == 0xFFFFFFFF)				
-					V_registers[0xF] = 1;	
-
-				*screenPixel ^= 0xFFFFFFFF;
+				if ( display_array[(y_coord + y_row) * X_RESOLUTION + (x_coord + x_column)] == 1)				
+					V_registers[0xF] = 1;
+					
+				display_array[(y_coord + y_row) * X_RESOLUTION + (x_coord + x_column)] ^= 0xFFFFFFFF;					
 			}
+			
 		}
 	}
 }

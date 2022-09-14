@@ -20,7 +20,7 @@ class Chip8 {
         u16 stack[STACK_COUNT] {};
         u8 stack_pointer {};        
         u8 sound_timer {};
-        u8 delay_timer {};  
+       
         u16 program_counter {};
         u16 op_code {}; 
         
@@ -63,7 +63,8 @@ class Chip8 {
         Chip8() = default;      
         u32 display_array[X_RESOLUTION*Y_RESOLUTION] {}; 
         u8 keyboard_controls[KEY_COUNT]{};    
-        void load_file(const char * file_name);     
+        u8 delay_timer {};  
+        bool load_file(std::string const& path);     
         void clear_all();   
         void get_Op_Code();    
         void decode_op_code();     

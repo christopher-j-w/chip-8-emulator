@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <string.h>
-#include <SDL2/SDL.h>
+#include <SDL2\SDL.h>
 #include "display.hpp"
 #include "chip8.hpp"
 
@@ -31,9 +31,10 @@ void Display_and_input::begin_display(char const* file_title)
 
 void Display_and_input::update_display(void const* pixels, int pitch)
 {
-    SDL_RenderClear(renderer);    
-	SDL_UpdateTexture(texture, nullptr, pixels, pitch);	      
-	SDL_RenderCopy(renderer, texture, nullptr, nullptr);    
+	
+    SDL_RenderClear(renderer);	
+	SDL_UpdateTexture(texture, nullptr, pixels, pitch);		      
+	SDL_RenderCopy(renderer, texture, nullptr, nullptr);	
 	SDL_RenderPresent(renderer);
 }
 
@@ -55,16 +56,16 @@ bool Display_and_input::get_key_press(u8* keys)
                             cout << "Terminating chip8 program.\n";
 							quit = true;
 						    break;
-						case SDLK_1:						
+						case SDLK_x:						
 							keys[0] = 1;                            
 						    break;
-						case SDLK_2:						
+						case SDLK_1:						
 							keys[1] = 1;                           
 						    break;
-						case SDLK_3:	                            				
+						case SDLK_2:	                            				
 							keys[2] = 1;
 						    break;
-						case SDLK_4:						
+						case SDLK_3:						
 							keys[3] = 1;
 						    break;
 						case SDLK_q:	
@@ -76,28 +77,28 @@ bool Display_and_input::get_key_press(u8* keys)
 						case SDLK_e:						
 							keys[6] = 1;
 						    break;
-						case SDLK_r:						
+						case SDLK_a:						
 							keys[7] = 1;
 						    break;
-						case SDLK_a:						
+						case SDLK_s:						
 							keys[8] = 1;
 						    break;
-						case SDLK_s:						
+						case SDLK_d:						
 							keys[9] = 1;
 						    break;
-						case SDLK_d:						
+						case SDLK_z:						
 							keys[10] = 1;
 						    break;
-						case SDLK_f:						
+						case SDLK_c:						
 							keys[11] = 1;
 						    break;
-						case SDLK_z:						
+						case SDLK_4:						
 							keys[12] = 1;
 						    break;
-						case SDLK_x:						
+						case SDLK_r:						
 							keys[13] = 1;
 						    break;
-						case SDLK_c:						
+						case SDLK_f:						
 							keys[14] = 1;
 						    break;
 						case SDLK_v:						
@@ -110,20 +111,20 @@ bool Display_and_input::get_key_press(u8* keys)
 				{
 					switch (event.key.keysym.sym)
 					{
+						case SDLK_x:						
+							keys[0] = 0;                            
+						    break;
 						case SDLK_1:						
-							keys[0] = 0;
+							keys[1] = 0;                           
 						    break;
-						case SDLK_2:						
-							keys[1] = 0;
-						    break;
-						case SDLK_3:						
+						case SDLK_2:	                            				
 							keys[2] = 0;
 						    break;
-						case SDLK_4:						
+						case SDLK_3:						
 							keys[3] = 0;
 						    break;
-						case SDLK_q:						
-							keys[4] = 0;
+						case SDLK_q:	
+                            keys[4] = 0;
 						    break;
 						case SDLK_w:						
 							keys[5] = 0;
@@ -131,28 +132,28 @@ bool Display_and_input::get_key_press(u8* keys)
 						case SDLK_e:						
 							keys[6] = 0;
 						    break;
-						case SDLK_r:						
+						case SDLK_a:						
 							keys[7] = 0;
 						    break;
-						case SDLK_a:						
+						case SDLK_s:						
 							keys[8] = 0;
 						    break;
-						case SDLK_s:						
+						case SDLK_d:						
 							keys[9] = 0;
 						    break;
-						case SDLK_d:						
+						case SDLK_z:						
 							keys[10] = 0;
 						    break;
-						case SDLK_f:						
+						case SDLK_c:						
 							keys[11] = 0;
 						    break;
-						case SDLK_z:						
+						case SDLK_4:						
 							keys[12] = 0;
 						    break;
-						case SDLK_x:						
+						case SDLK_r:						
 							keys[13] = 0;
 						    break;
-						case SDLK_c:						
+						case SDLK_f:						
 							keys[14] = 0;
 						    break;
 						case SDLK_v:						
