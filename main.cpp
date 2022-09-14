@@ -1,7 +1,7 @@
 /* A chip-8 interpreter by CJW	*/
 
 #include <iostream>
-#include <SDL2\SDL.h>
+#include <../SDL2/include/SDL2/SDL.h>
 
 #include "chip8.hpp"
 #include "display.hpp"
