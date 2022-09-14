@@ -15,8 +15,8 @@
 void Display_and_input::begin_display(char const* file_title)
 {
 	char window_title[256];	
-	//strcpy(window_title, "CHIP8 Interpreter -  ");
-	//strcat(window_title, file_title);
+	strcpy(window_title, "CHIP8 Interpreter -  ");
+	strcat(window_title, file_title);
 
 	window = SDL_CreateWindow(window_title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 25*X_RESOLUTION, 25*Y_RESOLUTION, SDL_WINDOW_RESIZABLE);
     renderer = SDL_CreateRenderer(window, -1, 0);

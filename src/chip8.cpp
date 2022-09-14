@@ -121,6 +121,7 @@ void Chip8::cycle()
 	//cout << "Current Op code to be executed is: " << op_code << '\n';
 	program_counter += 2;		
 	decode_op_code();
+	
 
 	if (delay_timer > 0)	
 		--delay_timer;		
@@ -423,8 +424,13 @@ void Chip8::Op_Code_8xy7(u8 Vx, u8 Vy)
 	V_registers[Vx] is multiplied by 2  */
 void Chip8::Op_Code_8xyE(u8 Vx, u8 Vy) 
 {		
-	V_registers[0xF] = (V_registers[Vx] & 0x80) >> 7;
-	V_registers[Vx] *= 2;	
+	u8 msb = (V_registers[Vx] & 0x80) >> 7;
+	V_registers[Vx] *= 2;
+	if (msb == 1)	
+		V_registers[0xF] = 1;
+	else 
+		V_registers[0xF] = 0;
+		
 }
 
 /*	Skip next instruction if V_registers[Vx] != V_registers[Vy] */

@@ -73,6 +73,8 @@ Run from terminal:
 
 -   Add roms to repository
 
+-   Fix quirks and edge case flag errors
+
 ## Credits
 
 Roms taken from https://github.com/dmatlack/chip8
