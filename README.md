@@ -1,7 +1,7 @@
 
 # chip-8-interpreter
 
-The purpose of this project is to gain a deeper understanding of how emulators function including through implementation of a CHIP-8 interpreter. I hope to use this as a stepping stone to a more complex project of writing a gameboy emulator.
+The purpose of this project is to gain a deeper understanding of how emulators function through implementation of a CHIP-8 interpreter. I hope to use this as a stepping stone to a more complex project of writing a gameboy emulator.
 
 ## What is CHIP-8?
 
