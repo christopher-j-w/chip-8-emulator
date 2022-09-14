@@ -61,7 +61,7 @@ Run from terminal:
 
 Run from terminal:     
 
-    ../chip8 roms/<romname>.ch8
+    chip8 ../roms/<romname>.ch8
 
 ## TO-DO
 
