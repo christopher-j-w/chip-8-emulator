@@ -45,13 +45,15 @@ Compile using:
 
 Run from terminal:  
 
-    ./chip8 ./roms/<romname>.ch8
+    ./chip8 ../roms/<romname>.ch8
 
 #   Windows (using minGW)
 
  To get SDL2:          
         
-     https://github.com/libsdl-org/SDL/releases/tag/release-2.24.0   
+    https://github.com/libsdl-org/SDL/releases/tag/release-2.24.0   
+
+    TODO: Folder structure and dll
      
  Compile using:   
     
@@ -59,7 +61,7 @@ Run from terminal:
 
 Run from terminal:     
 
-    chip8 roms/<romname>.ch8
+    ../chip8 roms/<romname>.ch8
 
 ## TO-DO
 
