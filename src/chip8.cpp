@@ -358,18 +358,21 @@ void Chip8::Op_Code_8xy0(u8 Vx, u8 Vy)
 void Chip8::Op_Code_8xy1(u8 Vx, u8 Vy) 
 {	
 	V_registers[Vx] |= V_registers[Vy];
+	V_registers[0xF] = 0;
 }
 
 /*	Set V_Registers[x] to bitwise V_Registers[x] AND V_Registers[y]	*/
 void Chip8::Op_Code_8xy2(u8 Vx, u8 Vy) 
 {
 	V_registers[Vx] &= V_registers[Vy];
+	V_registers[0xF] = 0;
 }
 
 /*	Set V_Registers[x] to bitwise V_Registers[x] XOR V_Registers[y]	*/
 void Chip8::Op_Code_8xy3(u8 Vx, u8 Vy) 
 {
 	V_registers[Vx] ^= V_registers[Vy];
+	V_registers[0xF] = 0;
 }
 
 /*	Total is equal to V_registers[x] + V_Reigsters[y].
@@ -390,33 +393,39 @@ void Chip8::Op_Code_8xy4(u8 Vx, u8 Vy)
 /*	If V_registers[x] > V_registers[y], set V_Registers[0xF] to carry.
 	Set V_Registers[x] to V_Registers[x] - V_Registers[y].	 */
 void Chip8::Op_Code_8xy5(u8 Vx, u8 Vy) 
-{	
+{		
+	V_registers[Vx] -= V_registers[Vy];
+
 	if (V_registers[Vx] > V_registers[Vy])	
 		V_registers[0xF] = 1;	
 	else	
 		V_registers[0xF] = 0;	
 
-	V_registers[Vx] -= V_registers[Vy];
 }
 
 /*	If the least-significant bit of V_registers[Vx] is 1, then V_Registers[0xF] is set to 1, otherwise 0. 
 	V_registers[Vx] is divided by 2. */
 void Chip8::Op_Code_8xy6(u8 Vx, u8 Vy) 
 {	
-	V_registers[0xF] = (V_registers[Vx] & 0x0001);
+	u8 lsb = (V_registers[Vx] & 0x0001);
 	V_registers[Vx] /= 2;
+	if (lsb == 1)	
+		V_registers[0xF] = 1;
+	else 
+		V_registers[0xF] = 0;
+	
 }
 
 /*	If V_registers[Vy] > V_registers[Vx], VF is set to 1, otherwise 0. 
 	V_registers[Vx] is set to V_registers[Vy] - V_registers[Vx] */
 void Chip8::Op_Code_8xy7(u8 Vx, u8 Vy) 
 {	
+	V_registers[Vx] = V_registers[Vy] - V_registers[Vx];
+
 	if (V_registers[Vy] > V_registers[Vx])	
 		V_registers[0xF] = 1;	
 	else	
 		V_registers[0xF] = 0;	
-
-	V_registers[Vx] = V_registers[Vy] - V_registers[Vx];
 
 }
 

@@ -85,4 +85,6 @@ https://en.wikipedia.org/wiki/CHIP-8
 
 http://devernay.free.fr/hacks/chip8/C8TECH10.HTM
 
+https://tobiasvl.github.io/blog/write-a-chip-8-emulator/#fx55-and-fx65-store-and-load-memory
+
 https://wiki.libsdl.org/
